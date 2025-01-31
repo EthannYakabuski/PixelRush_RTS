@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="PixelRushRTS"
+<<<<<<< HEAD
 run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -30,8 +31,16 @@ window/handheld/orientation=1
 
 enabled=PackedStringArray("res://addons/GodotPlayGameServices/plugin.cfg")
 
+=======
+config/features=PackedStringArray("4.3", "GL Compatibility")
+config/icon="res://icon.svg"
+
+>>>>>>> 6d7410324cda691957b8e1cb0adbaf54ea8ef581
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+<<<<<<< HEAD
 textures/vram_compression/import_etc2_astc=true
+=======
+>>>>>>> 6d7410324cda691957b8e1cb0adbaf54ea8ef581
