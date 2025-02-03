@@ -1,3 +1,30 @@
-[gd_scene format=3 uid="uid://x838q7bvnblp"]
+[gd_scene load_steps=2 format=3 uid="uid://x838q7bvnblp"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_fbwpt"]
 
 [node name="MainMenu" type="Node2D"]
+script = ExtResource("1_fbwpt")
+
+[node name="VersusButton" type="Button" parent="."]
+offset_left = 306.0
+offset_top = 404.0
+offset_right = 799.0
+offset_bottom = 621.0
+
+[node name="StoryButton" type="Button" parent="."]
+offset_left = 305.0
+offset_top = 723.0
+offset_right = 798.0
+offset_bottom = 938.0
+
+[node name="BuildButton" type="Button" parent="."]
+offset_left = 305.0
+offset_top = 1027.0
+offset_right = 795.0
+offset_bottom = 1242.0
+
+[node name="DraftButton" type="Button" parent="."]
+offset_left = 304.0
+offset_top = 1334.0
+offset_right = 797.0
+offset_bottom = 1546.0
