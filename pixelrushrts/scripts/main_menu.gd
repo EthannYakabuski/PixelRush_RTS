@@ -3,39 +3,59 @@ var _ad_view : AdView
 var _rewarded_ad : RewardedAd
 var _full_screen_content_callback : FullScreenContentCallback
 var on_user_earned_reward_listener := OnUserEarnedRewardListener.new()
+@onready var play_games_sign_in_client: PlayGamesSignInClient = $PlayGamesSignInClient
 
+#access to load related scenes
 const VERSUS_SCENE_PATH = "res://scenes/Versus.tscn"
 const STORY_SCENE_PATH  = "res://scenes/Story.tscn"
 const BUILD_SCENE_PATH  = "res://scenes/Build.tscn"
 const DRAFT_SCENE_PATH  = "res://scenes/Draft.tscn"
 
-# Called when the node enters the scene tree for the first time.
+#initialize Game services plugin as per demo code
+func _enter_tree() -> void:
+	GodotPlayGameServices.initialize()
+
 func _ready() -> void:
 	print("ready")
-	#The initializate needs to be done only once, ideally at app launch.
+	if not GodotPlayGameServices.android_plugin: 
+		print("Plugin not found")
+	else: 
+		print("Plugin found")
+		
+	#try to sign in to google games automatically	
+	play_games_sign_in_client.is_authenticated()
+	play_games_sign_in_client.sign_in()
+	
+	#initialize google admob
 	var onInitializationCompleteListener = OnInitializationCompleteListener.new()
 	onInitializationCompleteListener.on_initialization_complete = onAdInitializationComplete
 	var request_configuration = RequestConfiguration.new()
-	#$DebugLabel.text = $DebugLabel.text + "calling init"
 	MobileAds.initialize(onInitializationCompleteListener)
-	#$DebugLabel.text = $DebugLabel.text + " post init"
-	#"F03226F1DD8EFC77"
-	#,"2077EF9A63D2B398840261C8221A0C9B"
 	if MobileAds: 
-		#request_configuration.test_device_ids = ["523a1b0eb5b6be122cd04bedf8035291","2077EF9A63D2B398840261C8221A0C9B"]
 		MobileAds.set_request_configuration(request_configuration)
-		#_create_ad_view()
-		#check_initialization_status()
 
+#called when user is authenticated with google games
+func _on_user_authenticated(is_authenticated: bool) -> void:
+	print("Hi from Godot! User is authenticated? %s" % is_authenticated)
+	hideOrShowAuthenticatedButtons(is_authenticated)
+
+#shows or hides the google games related functionality based off auth status
+func hideOrShowAuthenticatedButtons(isAuth) -> void: 
+	if(isAuth): 
+		$SignInButton.visibility = false
+	else: 
+		$SignInButton.visibility = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 	
+#called after admob init is complete, loads a banner ad
 func onAdInitializationComplete(status : InitializationStatus): 
 	print("banner ad initialization complete")
 	_create_ad_view()
 
+#code to load banner ad
 func _create_ad_view() -> void:
 	#free memory
 	if _ad_view:
@@ -57,7 +77,7 @@ func destroy_ad_view():
 		_ad_view.destroy()
 		_ad_view = null
 
-
+#code to launch a rewarded ad, triggered manually by player
 func _on_ad_button_pressed() -> void:
 	if _rewarded_ad: 
 		_rewarded_ad.destroy()
@@ -78,7 +98,8 @@ func _on_ad_button_pressed() -> void:
 		
 	RewardedAdLoader.new().load(unit_id, AdRequest.new(), rewarded_ad_load_callback)
 		
-		
+
+#called after user watches the manually launched rewarded ad
 func on_user_earned_reward(rewarded_item : RewardedItem):
 	print("on_user_earned_reward, rewarded_item: rewarded", rewarded_item.amount, rewarded_item.type)
 	#once we are using an actual unit-id from admob, the rewarded_item.amount and rewarded_item.type values are set in the admob console
@@ -87,6 +108,7 @@ func on_user_earned_reward(rewarded_item : RewardedItem):
 	#TODO - reward player with coins
 
 
+#buttons to change to the different scenes in the game
 func _on_versus_button_pressed() -> void:
 	get_tree().change_scene_to_file(VERSUS_SCENE_PATH)
 
@@ -101,3 +123,7 @@ func _on_build_button_pressed() -> void:
 
 func _on_draft_button_pressed() -> void:
 	get_tree().change_scene_to_file(DRAFT_SCENE_PATH)
+
+#manual sign in with google games was pressed
+func _on_sign_in_button_pressed() -> void:
+	play_games_sign_in_client.sign_in()
