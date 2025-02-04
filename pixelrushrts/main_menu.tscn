@@ -45,4 +45,8 @@ offset_bottom = 1888.0
 theme_override_font_sizes/font_size = 50
 text = "Watch Ad"
 
+[connection signal="pressed" from="VersusButton" to="." method="_on_versus_button_pressed"]
+[connection signal="pressed" from="StoryButton" to="." method="_on_story_button_pressed"]
+[connection signal="pressed" from="BuildButton" to="." method="_on_build_button_pressed"]
+[connection signal="pressed" from="DraftButton" to="." method="_on_draft_button_pressed"]
 [connection signal="pressed" from="AdButton" to="." method="_on_ad_button_pressed"]

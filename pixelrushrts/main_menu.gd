@@ -41,7 +41,7 @@ func _create_ad_view() -> void:
 	
 	var unit_id = "ca-app-pub-3940256099942544/6300978111"
 
-	_ad_view = AdView.new(unit_id, AdSize.BANNER, AdPosition.Values.TOP_RIGHT)
+	_ad_view = AdView.new(unit_id, AdSize.BANNER, AdPosition.Values.TOP)
 	var ad_request = AdRequest.new()
 	_ad_view.load_ad(ad_request)
 	_ad_view.show()
@@ -79,3 +79,19 @@ func on_user_earned_reward(rewarded_item : RewardedItem):
 	#for our case, we are rewarding 25 coins to the player and must save it to the user data
 	
 	#TODO - reward player with coins
+
+
+func _on_versus_button_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_story_button_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_build_button_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_draft_button_pressed() -> void:
+	pass # Replace with function body.
