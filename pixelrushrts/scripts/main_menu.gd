@@ -4,8 +4,14 @@ var _rewarded_ad : RewardedAd
 var _full_screen_content_callback : FullScreenContentCallback
 var on_user_earned_reward_listener := OnUserEarnedRewardListener.new()
 
+const VERSUS_SCENE_PATH = "res://scenes/Versus.tscn"
+const STORY_SCENE_PATH  = "res://scenes/Story.tscn"
+const BUILD_SCENE_PATH  = "res://scenes/Build.tscn"
+const DRAFT_SCENE_PATH  = "res://scenes/Draft.tscn"
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	print("ready")
 	#The initializate needs to be done only once, ideally at app launch.
 	var onInitializationCompleteListener = OnInitializationCompleteListener.new()
 	onInitializationCompleteListener.on_initialization_complete = onAdInitializationComplete
@@ -82,16 +88,16 @@ func on_user_earned_reward(rewarded_item : RewardedItem):
 
 
 func _on_versus_button_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene_to_file(VERSUS_SCENE_PATH)
 
 
 func _on_story_button_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene_to_file(STORY_SCENE_PATH)
 
 
 func _on_build_button_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene_to_file(BUILD_SCENE_PATH)
 
 
 func _on_draft_button_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene_to_file(DRAFT_SCENE_PATH)
