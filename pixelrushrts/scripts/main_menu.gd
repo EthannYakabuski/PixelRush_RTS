@@ -11,11 +11,8 @@ const STORY_SCENE_PATH  = "res://scenes/Story.tscn"
 const BUILD_SCENE_PATH  = "res://scenes/Build.tscn"
 const DRAFT_SCENE_PATH  = "res://scenes/Draft.tscn"
 
-#initialize Game services plugin as per demo code
-func _enter_tree() -> void:
-	GodotPlayGameServices.initialize()
-
 func _ready() -> void:
+	GodotPlayGameServices.initialize()
 	print("ready")
 	if not GodotPlayGameServices.android_plugin: 
 		print("Plugin not found")
@@ -24,7 +21,6 @@ func _ready() -> void:
 		
 	#try to sign in to google games automatically	
 	play_games_sign_in_client.is_authenticated()
-	play_games_sign_in_client.sign_in()
 	
 	#initialize google admob
 	var onInitializationCompleteListener = OnInitializationCompleteListener.new()
@@ -126,4 +122,5 @@ func _on_draft_button_pressed() -> void:
 
 #manual sign in with google games was pressed
 func _on_sign_in_button_pressed() -> void:
+	print("sign in button manually pressed")
 	play_games_sign_in_client.sign_in()
