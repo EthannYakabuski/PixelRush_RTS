@@ -3,7 +3,6 @@ var _ad_view : AdView
 var _rewarded_ad : RewardedAd
 var _full_screen_content_callback : FullScreenContentCallback
 var on_user_earned_reward_listener := OnUserEarnedRewardListener.new()
-@onready var play_games_sign_in_client: PlayGamesSignInClient = $PlayGamesSignInClient
 
 #access to load related scenes
 const VERSUS_SCENE_PATH = "res://scenes/Versus.tscn"
@@ -11,8 +10,13 @@ const STORY_SCENE_PATH  = "res://scenes/Story.tscn"
 const BUILD_SCENE_PATH  = "res://scenes/Build.tscn"
 const DRAFT_SCENE_PATH  = "res://scenes/Draft.tscn"
 
-func _ready() -> void:
+@onready var play_games_sign_in_client: PlayGamesSignInClient = $PlayGamesSignInClient
+
+func _enter_tree() -> void:
+	print("enter tree")
 	GodotPlayGameServices.initialize()
+
+func _ready() -> void:
 	print("ready")
 	if not GodotPlayGameServices.android_plugin: 
 		print("Plugin not found")
@@ -21,6 +25,10 @@ func _ready() -> void:
 		
 	#try to sign in to google games automatically	
 	play_games_sign_in_client.is_authenticated()
+	$SignInButton.pressed.connect(func(): 
+		play_games_sign_in_client.sign_in()
+	)
+	#play_games_sign_in_client.connect("user_authenticated", _on_user_authenticated)
 	
 	#initialize google admob
 	var onInitializationCompleteListener = OnInitializationCompleteListener.new()
@@ -34,6 +42,7 @@ func _ready() -> void:
 func _on_user_authenticated(is_authenticated: bool) -> void:
 	print("Hi from Godot! User is authenticated? %s" % is_authenticated)
 	hideOrShowAuthenticatedButtons(is_authenticated)
+	#play_games_sign_in_client.is_authenticated()
 
 #shows or hides the google games related functionality based off auth status
 func hideOrShowAuthenticatedButtons(isAuth) -> void: 
