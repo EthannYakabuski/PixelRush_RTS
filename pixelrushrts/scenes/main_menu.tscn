@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://x838q7bvnblp"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_fbwpt"]
+[ext_resource type="Script" path="res://addons/GodotPlayGameServices/scripts/sign_in/sign_in_client.gd" id="2_apd4f"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_fbwpt")
+
+[node name="VersusButton" type="Button" parent="."]
+offset_left = 306.0
+offset_top = 404.0
+offset_right = 799.0
+offset_bottom = 621.0
+theme_override_font_sizes/font_size = 80
+text = "Versus"
+
+[node name="StoryButton" type="Button" parent="."]
+offset_left = 305.0
+offset_top = 723.0
+offset_right = 798.0
+offset_bottom = 938.0
+theme_override_font_sizes/font_size = 80
+text = "Story"
+
+[node name="BuildButton" type="Button" parent="."]
+offset_left = 305.0
+offset_top = 1027.0
+offset_right = 795.0
+offset_bottom = 1242.0
+theme_override_font_sizes/font_size = 80
+text = "Build"
+
+[node name="DraftButton" type="Button" parent="."]
+offset_left = 304.0
+offset_top = 1334.0
+offset_right = 797.0
+offset_bottom = 1546.0
+theme_override_font_sizes/font_size = 80
+text = "Draft"
+
+[node name="AdButton" type="Button" parent="."]
+offset_left = 40.0
+offset_top = 1807.0
+offset_right = 435.0
+offset_bottom = 1888.0
+theme_override_font_sizes/font_size = 50
+text = "Watch Ad"
+
+[node name="PlayGamesSignInClient" type="Node" parent="."]
+script = ExtResource("2_apd4f")
+
+[node name="SignInButton" type="Button" parent="."]
+offset_left = 700.0
+offset_top = 34.0
+offset_right = 1055.0
+offset_bottom = 131.0
+theme_override_font_sizes/font_size = 40
+text = "Sign In"
+
+[connection signal="pressed" from="VersusButton" to="." method="_on_versus_button_pressed"]
+[connection signal="pressed" from="StoryButton" to="." method="_on_story_button_pressed"]
+[connection signal="pressed" from="BuildButton" to="." method="_on_build_button_pressed"]
+[connection signal="pressed" from="DraftButton" to="." method="_on_draft_button_pressed"]
+[connection signal="pressed" from="AdButton" to="." method="_on_ad_button_pressed"]
+[connection signal="user_authenticated" from="PlayGamesSignInClient" to="." method="_on_user_authenticated"]
