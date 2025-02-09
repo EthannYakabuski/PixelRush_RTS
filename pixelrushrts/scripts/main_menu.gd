@@ -40,6 +40,14 @@ func _ready() -> void:
 		MobileAds.set_request_configuration(request_configuration)
 		
 	snapshots_client.load_game("playerData", true)
+	
+	snapshots_client.game_loaded.connect(
+		func(snapshot: PlayGamesSnapshot):
+			if !snapshot: 
+				print("saved game not found, creating new player data")
+			else: 
+				var dataToParse = snapshot.content.get_string_from_utf8()
+	)
 		
 		
 #called when user is authenticated with google games
