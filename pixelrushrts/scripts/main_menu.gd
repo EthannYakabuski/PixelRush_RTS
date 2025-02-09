@@ -11,6 +11,7 @@ const BUILD_SCENE_PATH  = "res://scenes/Build.tscn"
 const DRAFT_SCENE_PATH  = "res://scenes/Draft.tscn"
 
 @onready var play_games_sign_in_client: PlayGamesSignInClient = $PlayGamesSignInClient
+@onready var snapshots_client: PlayGamesSnapshotsClient = $PlayGamesSnapshotsClient
 
 func _enter_tree() -> void:
 	print("enter tree")
@@ -37,7 +38,10 @@ func _ready() -> void:
 	MobileAds.initialize(onInitializationCompleteListener)
 	if MobileAds: 
 		MobileAds.set_request_configuration(request_configuration)
-
+		
+	snapshots_client.load_game("playerData", true)
+		
+		
 #called when user is authenticated with google games
 func _on_user_authenticated(is_authenticated: bool) -> void:
 	print("Hi from Godot! User is authenticated? %s" % is_authenticated)
