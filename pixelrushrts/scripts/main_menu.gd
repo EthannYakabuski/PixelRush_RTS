@@ -15,6 +15,7 @@ const DRAFT_SCENE_PATH  = "res://scenes/Draft.tscn"
 
 func _enter_tree() -> void:
 	print("enter tree")
+	#initialize google play game services plugin
 	GodotPlayGameServices.initialize()
 
 func _ready() -> void:
@@ -39,14 +40,47 @@ func _ready() -> void:
 	if MobileAds: 
 		MobileAds.set_request_configuration(request_configuration)
 		
+	#try and load the players saved data
 	snapshots_client.load_game("playerData", true)
 	
 	snapshots_client.game_loaded.connect(
 		func(snapshot: PlayGamesSnapshot):
+			#if there is no saved data, create initial new player data
 			if !snapshot: 
 				print("saved game not found, creating new player data")
+				#rank - player trophies
+				#wins - total amount of lifetime wins
+				#loss - total amount of lifetime game losses
+				#coins - current amount of player coins
+				#cards - array of cards that have been unlocked by the player
+				#decks - array of decks that have been created by the player
+				var newPlayerData = {
+					"rank": 100,
+					"wins": 0,
+					"loss": 0,
+					"coins": 100,
+					"cards": [
+					{"cardName":"vialOfRedSlime", "unlocked": true, "played": 0, "type": "resource"},
+					{"cardName":"bucketOfRedSlime", "unlocked": true, "played": 0, "type": "resource"},
+					{"cardName":"vatOfRedSlime", "unlocked": true, "played": 0, "type": "resource"},
+					{"cardName":"vialOfBlueSlime", "unlocked": true, "played": 0, "type": "resource"},
+					{"cardName":"bucketOfBlueSlime", "unlocked": true, "played": 0, "type": "resource"},
+					{"cardName":"vatOfBlueSlime", "unlocked": true, "played": 0, "type": "resource"},
+					{"cardName":"vialOfYellowSlime", "unlocked": true, "played": 0, "type": "resource"},
+					{"cardName":"bucketOfYellowSlime", "unlocked": true, "played": 0, "type": "resource"},
+					{"cardName":"vatOfYellowSlime", "unlocked": true, "played": 0, "type": "resource"},
+					{"cardName":"redSlime", "unlocked": true, "played": 0, "type": "slime"},
+					{"cardName":"yellowSlime", "unlocked": true, "played": 0, "type": "slime"},
+					{"cardName":"blueSlime", "unlocked": true, "played": 0, "type": "slime"},
+					{"cardName":"graySlime", "unlocked": true, "played": 0, "type": "slime"}], 
+					"decks": []
+					}
 			else: 
+				print("saved data found, loading into memory")
+				#parse the json object and set into playerdata
 				var dataToParse = snapshot.content.get_string_from_utf8()
+				var parsedData = JSON.parse_string(dataToParse)
+				PlayerData.setData(parsedData)		
 	)
 		
 		

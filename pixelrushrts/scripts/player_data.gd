@@ -1,6 +1,7 @@
 extends Node
 
-
+var currentData = ""
+@onready var snapshots_client: PlayGamesSnapshotsClient = PlayGamesSnapshotsClient.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,5 +12,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+#set the players data in the global singleton
 func setData(data): 
-	pass
+	currentData = data
+	
+#get the current players saved data from the global singleton
+func getData(): 
+	return currentData
