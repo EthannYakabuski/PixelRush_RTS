@@ -60,20 +60,30 @@ func _ready() -> void:
 					"loss": 0,
 					"coins": 100,
 					"cards": [
-					{"cardName":"vialOfRedSlime", "unlocked": true, "played": 0, "type": "resource"},
-					{"cardName":"bucketOfRedSlime", "unlocked": true, "played": 0, "type": "resource"},
-					{"cardName":"vatOfRedSlime", "unlocked": true, "played": 0, "type": "resource"},
-					{"cardName":"vialOfBlueSlime", "unlocked": true, "played": 0, "type": "resource"},
-					{"cardName":"bucketOfBlueSlime", "unlocked": true, "played": 0, "type": "resource"},
-					{"cardName":"vatOfBlueSlime", "unlocked": true, "played": 0, "type": "resource"},
-					{"cardName":"vialOfYellowSlime", "unlocked": true, "played": 0, "type": "resource"},
-					{"cardName":"bucketOfYellowSlime", "unlocked": true, "played": 0, "type": "resource"},
-					{"cardName":"vatOfYellowSlime", "unlocked": true, "played": 0, "type": "resource"},
-					{"cardName":"redSlime", "unlocked": true, "played": 0, "type": "slime"},
-					{"cardName":"yellowSlime", "unlocked": true, "played": 0, "type": "slime"},
-					{"cardName":"blueSlime", "unlocked": true, "played": 0, "type": "slime"},
-					{"cardName":"graySlime", "unlocked": true, "played": 0, "type": "slime"}], 
-					"decks": []
+					{"cardName":"vialOfRedSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"bucketOfRedSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"vatOfRedSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"vialOfBlueSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"bucketOfBlueSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"vialOfYellowSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"bucketOfYellowSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"redSlime", "unlocked": true, "played": 0, "type": "slime", "amount": 4},
+					{"cardName":"yellowSlime", "unlocked": true, "played": 0, "type": "slime", "amount": 2},
+					{"cardName":"blueSlime", "unlocked": true, "played": 0, "type": "slime", "amount": 2},
+					{"cardName":"graySlime", "unlocked": true, "played": 0, "type": "slime", "amount": 2},
+					{"cardName":"ancientTablet", "unlocked": true, "played": 0, "type": "item", "amount": 1},
+					{"cardName":"potion", "unlocked": true, "played": 0, "type": "item", "amount": 1},
+					{"cardName":"flight", "unlocked": true, "played": 0, "type": "magic", "amount": 1},
+					{"cardName":"quake", "unlocked": true, "played": 0, "type": "magic", "amount": 1},
+					{"cardName":"recycle", "unlocked": true, "played": 0, "type": "magic", "amount": 2},
+					{"cardName":"psychic", "unlocked": true, "played": 0, "type": "hero", "amount": 1}
+					], 
+					"decks": [
+					{"deckName": "Red Slime Barrage", "wins": 0, "loss": 0, "deckCards": [
+						"redSlime", "redSlime", "redSlime", "redSlime", "vatOfRedSlime", "vatOfRedSlime", 
+						"bucketOfRedSlime", "bucketOfRedSlime", "recycle", "recycle", "flight", "psychic"
+					]}
+					]
 					}
 			else: 
 				print("saved data found, loading into memory")
