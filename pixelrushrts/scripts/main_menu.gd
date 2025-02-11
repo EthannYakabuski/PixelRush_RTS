@@ -85,6 +85,10 @@ func _ready() -> void:
 					]}
 					]
 					}
+				var jsonNewPlayerData = JSON.stringify(newPlayerData)
+				var parsedData = JSON.parse_string(jsonNewPlayerData)
+				PlayerData.setData(parsedData)
+					
 			else: 
 				print("saved data found, loading into memory")
 				#parse the json object and set into playerdata
