@@ -11,9 +11,11 @@ const BUILD_SCENE_PATH  = "res://scenes/Build.tscn"
 const DRAFT_SCENE_PATH  = "res://scenes/Draft.tscn"
 
 @onready var play_games_sign_in_client: PlayGamesSignInClient = $PlayGamesSignInClient
+@onready var snapshots_client: PlayGamesSnapshotsClient = $PlayGamesSnapshotsClient
 
 func _enter_tree() -> void:
 	print("enter tree")
+	#initialize google play game services plugin
 	GodotPlayGameServices.initialize()
 
 func _ready() -> void:
@@ -37,7 +39,65 @@ func _ready() -> void:
 	MobileAds.initialize(onInitializationCompleteListener)
 	if MobileAds: 
 		MobileAds.set_request_configuration(request_configuration)
-
+		
+	#try and load the players saved data
+	snapshots_client.load_game("playerData", true)
+	
+	snapshots_client.game_loaded.connect(
+		func(snapshot: PlayGamesSnapshot):
+			#if there is no saved data, create initial new player data
+			if !snapshot: 
+				print("saved game not found, creating new player data")
+				#rank - player trophies
+				#wins - total amount of lifetime wins
+				#loss - total amount of lifetime game losses
+				#coins - current amount of player coins
+				#cards - array of cards that have been unlocked by the player
+				#decks - array of decks that have been created by the player
+				var newPlayerData = {
+					"rank": 100,
+					"wins": 0,
+					"loss": 0,
+					"coins": 100,
+					"cards": [
+					{"cardName":"vialOfRedSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"bucketOfRedSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"vatOfRedSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"vialOfBlueSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"bucketOfBlueSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"vialOfYellowSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"bucketOfYellowSlime", "unlocked": true, "played": 0, "type": "resource", "amount": 2},
+					{"cardName":"redSlime", "unlocked": true, "played": 0, "type": "slime", "amount": 4},
+					{"cardName":"yellowSlime", "unlocked": true, "played": 0, "type": "slime", "amount": 2},
+					{"cardName":"blueSlime", "unlocked": true, "played": 0, "type": "slime", "amount": 2},
+					{"cardName":"graySlime", "unlocked": true, "played": 0, "type": "slime", "amount": 2},
+					{"cardName":"ancientTablet", "unlocked": true, "played": 0, "type": "item", "amount": 1},
+					{"cardName":"potion", "unlocked": true, "played": 0, "type": "item", "amount": 1},
+					{"cardName":"flight", "unlocked": true, "played": 0, "type": "magic", "amount": 1},
+					{"cardName":"quake", "unlocked": true, "played": 0, "type": "magic", "amount": 1},
+					{"cardName":"recycle", "unlocked": true, "played": 0, "type": "magic", "amount": 2},
+					{"cardName":"psychic", "unlocked": true, "played": 0, "type": "hero", "amount": 1}
+					], 
+					"decks": [
+					{"deckName": "Red Slime Barrage", "wins": 0, "loss": 0, "deckCards": [
+						"redSlime", "redSlime", "redSlime", "redSlime", "vatOfRedSlime", "vatOfRedSlime", 
+						"bucketOfRedSlime", "bucketOfRedSlime", "recycle", "recycle", "flight", "psychic"
+					]}
+					]
+					}
+				var jsonNewPlayerData = JSON.stringify(newPlayerData)
+				var parsedData = JSON.parse_string(jsonNewPlayerData)
+				PlayerData.setData(parsedData)
+					
+			else: 
+				print("saved data found, loading into memory")
+				#parse the json object and set into playerdata
+				var dataToParse = snapshot.content.get_string_from_utf8()
+				var parsedData = JSON.parse_string(dataToParse)
+				PlayerData.setData(parsedData)		
+	)
+		
+		
 #called when user is authenticated with google games
 func _on_user_authenticated(is_authenticated: bool) -> void:
 	print("Hi from Godot! User is authenticated? %s" % is_authenticated)
