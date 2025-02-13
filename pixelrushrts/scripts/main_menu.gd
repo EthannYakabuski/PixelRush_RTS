@@ -83,7 +83,8 @@ func _ready() -> void:
 						"redSlime", "redSlime", "redSlime", "redSlime", "vatOfRedSlime", "vatOfRedSlime", 
 						"bucketOfRedSlime", "bucketOfRedSlime", "recycle", "recycle", "flight", "psychic"
 					]}
-					]
+					],
+					"campaign": { "type": "", "completedNodes": [], "campaignDeck": {"deckName": "Campaign Deck", "deckCards": []}}
 					}
 				var jsonNewPlayerData = JSON.stringify(newPlayerData)
 				var parsedData = JSON.parse_string(jsonNewPlayerData)
